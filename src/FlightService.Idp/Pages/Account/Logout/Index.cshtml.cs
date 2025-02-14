@@ -1,11 +1,11 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+using Duende.IdentityModel;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
-using FlightService.Idp.Models;
-using IdentityModel;
+using FlighService.Core.Domain.Users.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,14 +18,14 @@ namespace FlightService.Idp.Pages.Logout
     [AllowAnonymous]
     public class Index : PageModel
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEventService _events;
 
         [BindProperty]
         public string? LogoutId { get; set; }
 
-        public Index(SignInManager<ApplicationUser> signInManager, IIdentityServerInteractionService interaction, IEventService events)
+        public Index(SignInManager<User> signInManager, IIdentityServerInteractionService interaction, IEventService events)
         {
             _signInManager = signInManager;
             _interaction = interaction;

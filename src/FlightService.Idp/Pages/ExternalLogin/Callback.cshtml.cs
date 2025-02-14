@@ -1,11 +1,11 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+using Duende.IdentityModel;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Services;
-using FlightService.Idp.Models;
-using IdentityModel;
+using FlighService.Core.Domain.Users.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,8 +19,8 @@ namespace FlightService.Idp.Pages.ExternalLogin
     [SecurityHeaders]
     public class Callback : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly ILogger<Callback> _logger;
         private readonly IEventService _events;
@@ -29,8 +29,8 @@ namespace FlightService.Idp.Pages.ExternalLogin
             IIdentityServerInteractionService interaction,
             IEventService events,
             ILogger<Callback> logger,
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -113,11 +113,11 @@ namespace FlightService.Idp.Pages.ExternalLogin
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1851:Possible multiple enumerations of 'IEnumerable' collection", Justification = "<Pending>")]
-        private async Task<ApplicationUser> AutoProvisionUserAsync(string provider, string providerUserId, IEnumerable<Claim> claims)
+        private async Task<User> AutoProvisionUserAsync(string provider, string providerUserId, IEnumerable<Claim> claims)
         {
             var sub = Guid.NewGuid().ToString();
 
-            var user = new ApplicationUser
+            var user = new User
             {
                 Id = sub,
                 UserName = sub, // don't need a username, since the user will be using an external provider to login

@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "FlightService.Api\\FlightService.Api.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "src\\FlightService.Idp\\FlightService.Idp.csproj",
+        "Action": "Start",
+        "DebugTarget": "SelfHost"
+      }
+    ]
+  }
+]

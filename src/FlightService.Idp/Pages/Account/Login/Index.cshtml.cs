@@ -6,7 +6,7 @@ using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
-using FlightService.Idp.Models;
+using FlighService.Core.Domain.Users.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,8 +19,8 @@ namespace FlightService.Idp.Pages.Login
     [AllowAnonymous]
     public class Index : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEventService _events;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
@@ -36,8 +36,8 @@ namespace FlightService.Idp.Pages.Login
             IAuthenticationSchemeProvider schemeProvider,
             IIdentityProviderStore identityProviderStore,
             IEventService events,
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
