@@ -1,4 +1,4 @@
-﻿using FlighService.Core.Domain.Roles.Entities;
+﻿using FlightService.Core.Domain.Roles.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

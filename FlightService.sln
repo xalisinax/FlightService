@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.Api", "FlightService.Api\FlightService.Api.csproj", "{4F8B62BA-564E-4B86-BA21-6FE857B259AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.Api", "src\FlightService.Api\FlightService.Api.csproj", "{4F8B62BA-564E-4B86-BA21-6FE857B259AE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{16F11291-28D7-4AEE-912D-0CEAB4F77081}"
 EndProject
@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{7AE3F2DD-E90C-42EC-8274-C80EC0EC0E84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlighService.Core.Domain", "src\FlighService.Core.Domain\FlighService.Core.Domain.csproj", "{D4DA8CC2-E34E-4DDC-9014-B665C0291ABD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.Core.Domain", "src\FlightService.Core.Domain\FlightService.Core.Domain.csproj", "{D4DA8CC2-E34E-4DDC-9014-B665C0291ABD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.Idp", "src\FlightService.Idp\FlightService.Idp.csproj", "{59226FBF-BFF9-4676-B50B-94E93F16780A}"
 EndProject
@@ -20,6 +20,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.Infrastructure.Persistence", "src\FlightService.Infrastructure.Persistence\FlightService.Infrastructure.Persistence.csproj", "{E1825FC1-04B5-4B3F-8DBE-BAAF994D067C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.Core.ApplicationServices", "src\FlightService.Core.ApplicationServices\FlightService.Core.ApplicationServices.csproj", "{982661CF-7CB3-4600-9B57-3BE353F1E287}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.MappingProfiles", "src\FlightService.MappingProfiles\FlightService.MappingProfiles.csproj", "{FC30B985-856A-497B-B50A-DA470F11D77A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.Infrastructure.Provision", "FlightService.Infrastructure.Provision\FlightService.Infrastructure.Provision.csproj", "{F788E57A-1FA6-4201-AB43-E32105859F75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,14 @@ Global
 		{982661CF-7CB3-4600-9B57-3BE353F1E287}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{982661CF-7CB3-4600-9B57-3BE353F1E287}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{982661CF-7CB3-4600-9B57-3BE353F1E287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC30B985-856A-497B-B50A-DA470F11D77A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC30B985-856A-497B-B50A-DA470F11D77A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC30B985-856A-497B-B50A-DA470F11D77A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC30B985-856A-497B-B50A-DA470F11D77A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F788E57A-1FA6-4201-AB43-E32105859F75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F788E57A-1FA6-4201-AB43-E32105859F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F788E57A-1FA6-4201-AB43-E32105859F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F788E57A-1FA6-4201-AB43-E32105859F75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +72,7 @@ Global
 		{9D9DFCEE-D3E2-4C1D-A85E-2A79458BB4BB} = {16F11291-28D7-4AEE-912D-0CEAB4F77081}
 		{E1825FC1-04B5-4B3F-8DBE-BAAF994D067C} = {9D9DFCEE-D3E2-4C1D-A85E-2A79458BB4BB}
 		{982661CF-7CB3-4600-9B57-3BE353F1E287} = {7AE3F2DD-E90C-42EC-8274-C80EC0EC0E84}
+		{FC30B985-856A-497B-B50A-DA470F11D77A} = {9F3EF8BA-65BE-4DA5-8CD4-FA165E791EB6}
+		{F788E57A-1FA6-4201-AB43-E32105859F75} = {9D9DFCEE-D3E2-4C1D-A85E-2A79458BB4BB}
 	EndGlobalSection
 EndGlobal

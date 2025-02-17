@@ -14,7 +14,6 @@ namespace FlightService.Idp
         {
             using var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<FlightDbContext>();
-            context.Database.Migrate();
 
             var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var alice = userMgr.FindByNameAsync("alice").Result;

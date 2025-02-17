@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FlightService.Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(CommandDbContext))]
+    [DbContext(typeof(FlightDbContext))]
     partial class CommandDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -22,7 +22,56 @@ namespace FlightService.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FlighService.Core.Domain.Roles.Entities.Role", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Flights.Entities.Flight", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Destination")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
+                        .HasDefaultValue("");
+
+                    b.Property<string>("Origin")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
+                        .HasDefaultValue("");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
+                        .HasDefaultValue("");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TakeOffAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Origin", "Destination", "Provider");
+
+                    b.ToTable("Flights", (string)null);
+                });
+
+            modelBuilder.Entity("FlightService.Core.Domain.Roles.Entities.Role", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(32)
@@ -50,7 +99,7 @@ namespace FlightService.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("FlighService.Core.Domain.Roles.Entities.RoleClaim", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Roles.Entities.RoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -75,7 +124,7 @@ namespace FlightService.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("FlighService.Core.Domain.Users.Entities.User", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Users.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(32)
@@ -141,7 +190,7 @@ namespace FlightService.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("FlighService.Core.Domain.Users.Entities.UserClaim", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Users.Entities.UserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -166,7 +215,7 @@ namespace FlightService.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("FlighService.Core.Domain.Users.Entities.UserLogin", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Users.Entities.UserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -188,7 +237,7 @@ namespace FlightService.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("FlighService.Core.Domain.Users.Entities.UserRole", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Users.Entities.UserRole", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(32)");
@@ -203,7 +252,7 @@ namespace FlightService.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("FlighService.Core.Domain.Users.Entities.UserToken", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Users.Entities.UserToken", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(32)");
@@ -222,51 +271,88 @@ namespace FlightService.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("FlighService.Core.Domain.Roles.Entities.RoleClaim", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Flights.Entities.Flight", b =>
                 {
-                    b.HasOne("FlighService.Core.Domain.Roles.Entities.Role", null)
+                    b.OwnsMany("FlightService.Core.Domain.Flights.Entities.FlightPassenger", "Passengers", b1 =>
+                        {
+                            b1.Property<string>("FlightId")
+                                .HasColumnType("nvarchar(32)");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<DateTime>("ReservedAt")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Seat")
+                                .IsRequired()
+                                .HasMaxLength(10)
+                                .HasColumnType("nvarchar(10)");
+
+                            b1.Property<string>("UserId")
+                                .IsRequired()
+                                .HasMaxLength(32)
+                                .HasColumnType("nvarchar(32)");
+
+                            b1.HasKey("FlightId", "Id");
+
+                            b1.ToTable("FlightPassenger", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("FlightId");
+                        });
+
+                    b.Navigation("Passengers");
+                });
+
+            modelBuilder.Entity("FlightService.Core.Domain.Roles.Entities.RoleClaim", b =>
+                {
+                    b.HasOne("FlightService.Core.Domain.Roles.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FlighService.Core.Domain.Users.Entities.UserClaim", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Users.Entities.UserClaim", b =>
                 {
-                    b.HasOne("FlighService.Core.Domain.Users.Entities.User", null)
+                    b.HasOne("FlightService.Core.Domain.Users.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FlighService.Core.Domain.Users.Entities.UserLogin", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Users.Entities.UserLogin", b =>
                 {
-                    b.HasOne("FlighService.Core.Domain.Users.Entities.User", null)
+                    b.HasOne("FlightService.Core.Domain.Users.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FlighService.Core.Domain.Users.Entities.UserRole", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Users.Entities.UserRole", b =>
                 {
-                    b.HasOne("FlighService.Core.Domain.Roles.Entities.Role", null)
+                    b.HasOne("FlightService.Core.Domain.Roles.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FlighService.Core.Domain.Users.Entities.User", null)
+                    b.HasOne("FlightService.Core.Domain.Users.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FlighService.Core.Domain.Users.Entities.UserToken", b =>
+            modelBuilder.Entity("FlightService.Core.Domain.Users.Entities.UserToken", b =>
                 {
-                    b.HasOne("FlighService.Core.Domain.Users.Entities.User", null)
+                    b.HasOne("FlightService.Core.Domain.Users.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

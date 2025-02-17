@@ -13,10 +13,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Nanoid" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FlighService.Core.Domain\FlighService.Core.Domain.csproj" />
+    <ProjectReference Include="..\FlightService.Core.Domain\FlightService.Core.Domain.csproj" />
   </ItemGroup>
 
 </Project>
