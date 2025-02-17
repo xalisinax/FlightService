@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FlightService.Core.Domain.Common.Pipelines.Commands;
 
-public class CommandPipeline<TRequest, TReponse>(IUnitOfWork unitOfWork, IValidator<TRequest> validator, ILogger<CommandPipeline<TRequest, TReponse>> logger) : IPipelineBehavior<TRequest, TReponse> where TRequest : ICommand<TReponse>
+public class CommandPipeline<TRequest, TReponse>(IUnitOfWork unitOfWork, ILogger<CommandPipeline<TRequest, TReponse>> logger,IValidator<TRequest> validator = null) : IPipelineBehavior<TRequest, TReponse> where TRequest : ICommand<TReponse>
 {
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IValidator<TRequest> _validator = validator;
@@ -15,12 +15,15 @@ public class CommandPipeline<TRequest, TReponse>(IUnitOfWork unitOfWork, IValida
 
     public async Task<TReponse> Handle(TRequest request, RequestHandlerDelegate<TReponse> next, CancellationToken cancellationToken)
     {
-        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
+        if(_validator != null)
         {
-            var errors = validationResult.Errors.ToDictionary(e => e.PropertyName.ToCamelCase(), e => e.ErrorMessage);
-            throw new BadRequestException(errors);
+            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors.ToDictionary(e => e.PropertyName.ToCamelCase(), e => e.ErrorMessage);
+                throw new BadRequestException(errors);
+            }
         }
 
         try

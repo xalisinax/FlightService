@@ -58,6 +58,16 @@ public class Flight : Entity
         AddEvent(new FlightPassengerAdded(userId, seat, Id));
     }
 
+    public void RemovePassenger(string userId)
+    {
+        if (Status != FlightStatus.Registering)
+            throw new DomainStateException("You are unable to this action at the time");
+
+        var passenger = _passengers.FirstOrDefault(x => x.UserId == userId) ?? throw new DomainStateException("You are not registered on current flight");
+
+        _passengers.Remove(passenger);
+    }
+
     public void InActivate()
     {
         Status = FlightStatus.InActive;

@@ -8,6 +8,8 @@ internal class FlightReservationQueryModelTypeConfiguration : IEntityTypeConfigu
 {
     public void Configure(EntityTypeBuilder<FlightReservationQueryModel> builder)
     {
+        builder.ToTable(nameof(FlightReservationQueryModel), (table) => table.ExcludeFromMigrations());
+
         builder.HasNoKey()
             .ToSqlQuery(View.FlightReservationQuery);
     }

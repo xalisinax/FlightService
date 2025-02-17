@@ -10,10 +10,12 @@ namespace FlightService.Idp
 {
     public class SeedData
     {
-        public static void EnsureSeedData(WebApplication app)
+        public static async void EnsureSeedData(WebApplication app)
         {
             using var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<FlightDbContext>();
+
+            await context.Database.MigrateAsync();
 
             var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var alice = userMgr.FindByNameAsync("alice").Result;

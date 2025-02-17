@@ -49,4 +49,14 @@ public class FlightsController : ParcellController
 
         return await SendQuery<GetMyFlightReservationsQuery, IList<FlightReservationDto>>(query, cancellationToken);
     }
+
+    [HttpDelete("{id}/mine")]
+    public async Task<IActionResult> DeleteMyFlight([FromRoute] string id, CancellationToken cancellationToken)
+    {
+        var userId = User.GetUserId();
+
+        var command = new UnReserveFlightCommand(id, userId);
+
+        return await SendCommand<UnReserveFlightCommand, string>(command, cancellationToken);
+    }
 }

@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Pass123$
+      - MSSQL_PID=Developer
+    user: root
+    networks:
+      - flight
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Pass123$ -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+
+  sqlserver.configurator:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    user: root
+    networks:
+      - flight
+    volumes:
+      - ./init-sqlserver.sql:/docker-entrypoint-initdb.d/init-sqlserver.sql
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    command: >
+      bash -c "/opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P Pass123$ -C -d master -i docker-entrypoint-initdb.d/init-sqlserver.sql;echo "All done!";"
+
+  flightservice-api:
+    build:
+      dockerfile: src/FlightService.Api/DockerFile
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    ports:
+      - "5134:8080"
+    networks:
+      - flight
+
+  flightservice-idp:
+    build:
+      dockerfile: src/FlightService.Idp/DockerFile
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    ports:
+      - "5000:8080"
+    networks:
+      - flight
+
+networks:
+  flight:

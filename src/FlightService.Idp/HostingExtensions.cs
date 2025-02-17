@@ -32,6 +32,9 @@ namespace FlightService.Idp
             services
                 .AddIdentityServer(options =>
                 {
+                    options.Authentication.CookieSameSiteMode = SameSiteMode.Unspecified;
+                    options.Authentication.CheckSessionCookieSameSiteMode = SameSiteMode.Unspecified;
+
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
@@ -63,6 +66,11 @@ namespace FlightService.Idp
             services.AddAutoMapper(config =>
             {
                 config.AddMaps(Assembly.Load("FlightService.MappingProfiles"));
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.Unspecified;
             });
 
             return builder.Build();
