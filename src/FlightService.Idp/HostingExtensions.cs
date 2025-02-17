@@ -1,10 +1,15 @@
 using Duende.IdentityServer;
-using FlighService.Core.Domain.Roles.Entities;
-using FlighService.Core.Domain.Users.Entities;
+using FlightService.Core.Domain.Common.DI;
+using FlightService.Core.Domain.Common.Pipelines.Commands;
+using FlightService.Core.Domain.Roles.Entities;
+using FlightService.Core.Domain.Users.Entities;
 using FlightService.Infrastructure.Persistence;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Reflection;
 
 namespace FlightService.Idp
 {
@@ -12,16 +17,19 @@ namespace FlightService.Idp
     {
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
-            builder.Services.AddRazorPages();
+            var services = builder.Services;
+            var configurations = builder.Configuration;
 
-            builder.Services.AddDbContext<CommandDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+            services.AddRazorPages();
 
-            builder.Services.AddIdentity<User, Role>()
-                .AddEntityFrameworkStores<CommandDbContext>()
+            services.AddDbContext<FlightDbContext>(options =>
+                options.UseSqlServer(configurations.GetConnectionString("Default")));
+
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<FlightDbContext>()
                 .AddDefaultTokenProviders();
 
-            builder.Services
+            services
                 .AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
@@ -37,7 +45,25 @@ namespace FlightService.Idp
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<User>();
 
-            builder.Services.AddAuthentication();
+            services.AddAuthentication();
+
+            services.AddMediatR(config =>
+            {
+                config.RegisterServicesFromAssemblies(Assembly.Load("FlightService.Core.ApplicationServices"));
+                services.AddScoped(typeof(IPipelineBehavior<,>), typeof(CommandPipeline<,>));
+            });
+
+            services.AddServicesWithTheirLifetimes(config =>
+            {
+                config.AssemblyNames = ["FlightService.Infrastructure.Persistence", "FlightService.Core.Domain", "FlightService.Core.ApplicationServices", "FlightService.Infrastructure.Provision"];
+            });
+
+            services.AddValidatorsFromAssembly(Assembly.Load("FlightService.Core.Domain"));
+
+            services.AddAutoMapper(config =>
+            {
+                config.AddMaps(Assembly.Load("FlightService.MappingProfiles"));
+            });
 
             return builder.Build();
         }

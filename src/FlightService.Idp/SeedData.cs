@@ -1,5 +1,5 @@
 ﻿using Duende.IdentityModel;
-using FlighService.Core.Domain.Users.Entities;
+using FlightService.Core.Domain.Users.Entities;
 using FlightService.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +13,7 @@ namespace FlightService.Idp
         public static void EnsureSeedData(WebApplication app)
         {
             using var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
+            var context = scope.ServiceProvider.GetRequiredService<FlightDbContext>();
             context.Database.Migrate();
 
             var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<User>>();

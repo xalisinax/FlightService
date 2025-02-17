@@ -16,6 +16,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\FlightService.Infrastructure.Provision\FlightService.Infrastructure.Provision.csproj" />
+	  <ProjectReference Include="..\FlightService.Core.ApplicationServices\FlightService.Core.ApplicationServices.csproj" />
 	  <ProjectReference Include="..\FlightService.Infrastructure.Persistence\FlightService.Infrastructure.Persistence.csproj" />
+	  <ProjectReference Include="..\FlightService.MappingProfiles\FlightService.MappingProfiles.csproj" />
 	</ItemGroup>
 </Project>
