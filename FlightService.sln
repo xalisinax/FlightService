@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.Core.Applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.MappingProfiles", "src\FlightService.MappingProfiles\FlightService.MappingProfiles.csproj", "{FC30B985-856A-497B-B50A-DA470F11D77A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.Infrastructure.Provision", "FlightService.Infrastructure.Provision\FlightService.Infrastructure.Provision.csproj", "{F788E57A-1FA6-4201-AB43-E32105859F75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.Infrastructure.Provision", "src\FlightService.Infrastructure.Provision\FlightService.Infrastructure.Provision.csproj", "{F788E57A-1FA6-4201-AB43-E32105859F75}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{27C3C405-8C20-49F7-953F-0A9B6D6A6556}"
 	ProjectSection(SolutionItems) = preProject

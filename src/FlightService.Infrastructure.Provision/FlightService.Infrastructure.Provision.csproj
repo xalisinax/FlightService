@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\FlightService.Core.Domain\FlightService.Core.Domain.csproj" />
+    <ProjectReference Include="..\FlightService.Core.Domain\FlightService.Core.Domain.csproj" />
   </ItemGroup>
 
 </Project>
